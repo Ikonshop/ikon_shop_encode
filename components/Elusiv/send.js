@@ -5,6 +5,7 @@ import { Keypair, LAMPORTS_PER_SOL, PublicKey, Connection } from "@solana/web3.j
 import { Elusiv, TokenType } from "elusiv-sdk";
 import Loading from "../Loading";
 import styles from "./styles/Send.module.css";
+import ElusivSetup from "../../components/Elusiv/userSetUp";
 
 
 const SendElusiv = (req) => {
@@ -93,7 +94,7 @@ const SendElusiv = (req) => {
                 <button 
                     type="submit"
                     onClick={onSubmit}
-                    className={styles.pay_btn}
+                    className="buy-button"
                 >
                     Send Txn
                 </button>
@@ -106,6 +107,7 @@ const SendElusiv = (req) => {
 
     return(
         <div>
+            {!loading && !txnSent && <ElusivSetup />}
             {!loading && renderSubmit()}
             {loading && <Loading />}
         </div>

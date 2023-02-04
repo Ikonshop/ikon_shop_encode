@@ -253,7 +253,7 @@ const ElusivSetup = () => {
                             height: "30px",
                             borderRadius: "5px",
                             border: "1px solid #000",
-                            margin: "0 10px",
+                            margin: "10px 10px",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
