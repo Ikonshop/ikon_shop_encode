@@ -139,7 +139,7 @@ function Dashboard() {
           >
             <IoLinkOutline style={{ transform: "rotate(-45deg)" }} />
 
-            <span id={styles.full_screen}>Elusiv</span>
+            <span id={styles.full_screen}>Elusiv History</span>
           </button>
           <button
             id="link"

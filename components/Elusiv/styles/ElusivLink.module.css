@@ -480,6 +480,149 @@
     font-size: 1.1rem;
     font-weight: bold;
   } */
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .recentTxns {
+    margin: 0px 0 0px 0;
+    width: 70%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #aaacac3a;
+    border-radius: 20px;
+  }
+
+  .table_header_text {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px 0;
+    color: #130b46;
+    font-weight: bold;
+    /* underline */
+
+  }
+
+  .txn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .txnInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .txnInfo > p {
+    margin-right: 8px;
+  }
+
+  .txnInfo > p > span {
+    font-weight: bold;
+  }
+
+  .last5Txns {
+    margin: 10px 0 0px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 20px;
+  }
+
+  .last5Txns tr:hover:not(:first-child) {
+    background-color: #e5e5e5;
+  }
+
+  .last5Txns td:before {
+    display: none;
+  }
+
+  .last5txns > h2 {
+    font-size: 20px;
+    text-align: center;
+    color: #130b46;
+    font-weight: bold;
+  }
+
+  .sub_table {
+    width: 100%;
+  }
+  
+  .sub_table tr:hover:not(:first-child) {
+    background-color: #e5e5e5;
+  }
+  .sub_table td:before {
+    display: none;
+  }
+  .sub_table th,
+  .sub_table td {
+    display: table-cell;
+    padding: 0.25em 0.5em;
+  }
+  .sub_table th:first-child,
+  .sub_table td:first-child {
+    padding-left: 0;
+  }
+  .sub_table th {
+    color: #aaacac;
+    text-transform: uppercase;
+    background: #f4f6f8 !important;
+  }
+  .sub_table th:last-child,
+  .sub_table td:last-child {
+    padding-right: 0;
+  }
+  .sub_table th,
+  .sub_table td {
+    padding: 1.5em 3em !important;
+  }
+  .sub_table td {
+    position: relative;
+  }
+  
+  .sub_table td .active_status,
+  .sub_table td .overdue_status,
+  .sub_table td .cxld_status {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+  }
+  
+  .sub_table td .active_status {
+    background: #42ed72;
+  }
+  .sub_table td .overdue_status {
+    background: #f28d30;
+  }
+  .sub_table td .cxld_status {
+    background: #ff1111;
+  }
+  
+  .orders_table {
+    margin: 30px 0 50px 0;
+    width: 100%;
+  }
+  
+  .sub_table tr:hover:not(:first-child) {
+    background-color: #e5e5e5;
+  }
   
   /* For Tablet View */
   @media only screen and (max-width: 1410px) {

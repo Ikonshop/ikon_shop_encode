@@ -74,12 +74,12 @@ const ElusivSetup = () => {
         const elusiv = await Elusiv.getElusivInstance(seed, publicKey, connection);
         const receiverPublicKey = recipient ? new PublicKey(recipient) : null;
         console.log('send starting with recipient', receiverPublicKey.toString());
-        await checkPrivateBalance();
+        // await checkPrivateBalance();
 
-        if(elusivBalance < sendAmount) {
-            alert('Not enough balance to send, top up your account');
-            return;
-        }
+        // if(elusivBalance < sendAmount) {
+        //     alert('Not enough balance to send, top up your account');
+        //     return;
+        // }
         
         // Send half a SOL, privately 😎
         const sendTx = await elusiv.buildSendTx(sendAmount * LAMPORTS_PER_SOL, receiverPublicKey, 'LAMPORTS');
