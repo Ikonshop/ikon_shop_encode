@@ -118,10 +118,9 @@ export default function PaylinkComponent(product) {
                   </div>
                 ) : null}
 
-                {type === "tipjar" && tipAmount && (
-                    // checkbox that sets showElusiv to true
                   <div className={styles.product_details_price}>
                     <input
+                      style={{ marginRight: "5px" }}
                       type="checkbox"
                       id="elusiv"
                       name="elusiv"
@@ -130,8 +129,7 @@ export default function PaylinkComponent(product) {
                     />
                     <label for="elusiv">Send Privately w/ Elusiv</label>
                   </div>
-
-                )}
+             
 
                 {/* display Buy Button after Tip Amount has been set */}
               </div>
@@ -163,6 +161,15 @@ export default function PaylinkComponent(product) {
               className={styles.pay_btn}
               id={id}
               price={tipAmount}
+              token={tokenType}
+              owner={owner}
+            />
+          )}
+          {publicKey && showElusiv && (
+            <SendElusiv
+              className={styles.pay_btn}
+              id={id}
+              price={price}
               token={tokenType}
               owner={owner}
             />
