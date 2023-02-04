@@ -12,7 +12,7 @@ import Products from "../components/Merchant/Products";
 import UserOrders from "../components/User/User-Orders";
 import CreateLink from "../components/User/Create-Link";
 
-import "glider-js/glider.min.css";
+// import "glider-js/glider.min.css";
 
 
 // Constants
