@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { config } from "@fortawesome/fontawesome-svg-core";
-// import { getCollectionOrders } from "../../lib/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-// import Link from "next/link";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import Orders from "../../components/User/Link-Orders";
 import styles from "../../styles/Merchant.module.css";
 import Loading from "../../components/Loading";
-import UserSubs from "../../components/User/User-Subs";
 import {
-  WarningOutline,
-  TrashBin,
-  Link,
-  Gift,
-  Clipboard,
-} from "react-ionicons";
+  faLink,
+  faJar,
+} from "@fortawesome/free-solid-svg-icons";
 // USER COMPONENTS
 import UserOrders from "../../components/User/User-Orders";
 import PayRequests from "../../components/Merchant/PayRequests";
@@ -30,6 +22,9 @@ import {
   IoFileTrayFullOutline,
   IoInformationCircleOutline,
   IoLinkOutline,
+  IoCopy,
+  IoEye,
+  IoTrashBin,
 } from "react-icons/io5";
 import ElusivSetup from "../../components/Elusiv/userSetUp";
 import RecentTxns from "../../components/Elusiv/recentTxns";
@@ -39,14 +34,8 @@ config.autoAddCss = false;
 function Dashboard() {
   const [loading, setLoading] = useState(null);
   const [currentWallet, setCurrentWallet] = useState([]);
-  const [accessGranted, setAccessGranted] = useState(true);
-  const [renderNfts, setRenderNfts] = useState(false);
-  const [nftDisplay, setNftDisplay] = useState([]);
-  const [showProductLinks, setShowProductLinks] = useState(false);
   const [ownerProducts, setOwnerProducts] = useState([]);
   const [activeMenu, setActiveMenu] = useState();
-
-  var ownerWalletNfts = [];
   const router = useRouter();
   const { publicKey, connected } = useWallet();
 
@@ -58,7 +47,6 @@ function Dashboard() {
   const [showElusivSetup, setShowElusivSetup] = useState(false);
   const [userLinks, setUserLinks] = useState([]);
   const [userTipJar, setUserTipJar] = useState([]);
-  const [betaUser, setBetaUser] = useState(true);
   const [showGreen, setShowGreen] = useState(false);
 
   const renderLoading = () => <Loading />;
@@ -219,7 +207,6 @@ function Dashboard() {
               {currentWallet.slice(-4)}{" "}
             </span>
           </h1>
-          {/* {!publicKey ? <WalletMultiButton id={styles.mobile_screen} /> : null} */}
           <button
             onClick={() => setShowCreateLink(true)}
             id={styles.full_screen}
@@ -232,9 +219,6 @@ function Dashboard() {
       </div>
       <ElusivSetup publicKey={publicKey} />
       <div className={styles.recent_links_container}>
-        {/* SUBSCRIPTION TABLE FOR USER */}
-        {/* {publicKey ? <UserSubs publicKey={publicKey} /> : null} */}
-
         {/* NO USER LINKS CREATED */}
         {userLinks.length > 0 && !loading ? (
           renderProductLinks()
@@ -246,13 +230,6 @@ function Dashboard() {
         ) : (
           <p>No Tip Jar Created</p>
         )}
-        {/* {userLinks.length > 0 && !loading ? (
-        <PayRequests publicKey={publicKey}/>
-        ) : (
-          <p>No Links Created</p>
-        )} */}
-
-        
       </div>
     </div>
   );
@@ -261,70 +238,50 @@ function Dashboard() {
     return (
       <div>
         <h4 className={styles.paylink_header}>Pay Requests</h4>
-        <div className={styles.paylink_container}>
-          {/* map the first 3 "products" in userLinks */}
-          {userLinks.slice(0, 3).map((product, index) => (
-            <div key={index} className={styles.links}>
-              <Link
-                style={{
-                  color: "#000",
-                  fontSize: "12px",
-                  marginLeft: "2px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => router.push(`/product/${product.id}`)}
-              />
-              <button
-                className={styles.link_button}
-                onClick={() => {
-                  router.push(`/product/${product.id}`);
-                }}
-              >
-                ikonshop.io/product/{product.id}
-              </button>
-              <TrashBin
-                style={{
-                  color: "#000",
-                  fontSize: "12px",
-                  marginLeft: "2px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  if (
-                    confirm("Are you sure you want to delete this link?") ==
-                    true
-                  ) {
-                    deleteSingleProduct(product.id),
-                      // delete product from userLinks using it's index position
-                      setUserLinks(userLinks.filter((_, i) => i !== index));
-                  } else {
-                    return;
+        <div className={styles.links_container}>
+          {userLinks.slice(0, 3).map((payRequest, index) => (
+            <div className={styles.link} key={index}>
+              <div className={styles.payreq_col1}>
+                <div className={styles.payreq_bg}>
+                  <IoLinkOutline
+                    style={{
+                      transform: "rotate(-45deg)",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: "24px",
+                    }}
+                    className={styles.link_icon}
+                    icon={faLink}
+                  />
+                </div>
+                <div className={styles.link_name}>
+                  {payRequest.name.length > 15
+                    ? payRequest.name.substring(0, 15) + "..."
+                    : payRequest.name}
+                </div>
+              </div>
+              <div className={styles.icon_container}>
+                <IoCopy
+                  className={styles.link_icon}
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      `https://ikonshop.io/product/${payRequest.id}`
+                    )
                   }
-                }}
-              />
-
-              {/* <Clipboard
-                className={styles.copy_icon}
-                icon={faCopy}
-                style={{
-                  color: "#000",
-                  fontSize: "24px",
-                  marginLeft: "6px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                  borderLeft: "1px solid #bebebe",
-                  paddingLeft: "10px",
-                }}
-                onClick={() => {
-                  navigator.clipboard.writeText(`https://ikonshop.io/product/${product.id}`),
-                  setShowGreen(true),
-                  console.log("should trigger green");
-                }
-                }
-              /> */}
-            </div>
+                />
+                <IoEye
+                  className={styles.link_icon}
+                  onClick={() => router.push(`/product/${payRequest.id}`)}
+                />
+                <IoTrashBin
+                  className={styles.link_icon}
+                  onClick={() => {
+                    deleteSingleProduct(payRequest.id),
+                      setPayRequests(payRequests.filter((_, i) => i !== index));
+                  }}
+                />
+              </div>
+          </div>
           ))}
         </div>
       </div>
@@ -336,58 +293,45 @@ function Dashboard() {
       <div>
         <h4 className={styles.paylink_header}>TipJar</h4>
         <div className={styles.paylink_container}>
-          {userTipJar.slice(0, 2).map((product, index) => (
-            <div key={index} className={styles.links}>
-              <Gift
-                style={{
-                  color: "#000",
-                  fontSize: "24px",
-                  marginLeft: "2px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => router.push(`/product/${product.id}`)}
-              />
-              <button
-                className={styles.link_button}
-                onClick={() => router.push(`/product/${product.id}`)}
-              >
-                ikonshop.io/product/{product.id}
-              </button>
-              <TrashBin
-                style={{
-                  color: "#000",
-                  fontSize: "24px",
-                  marginLeft: "2px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  if (
-                    confirm("Are you sure you want to delete this link?") ==
-                    true
-                  ) {
-                    deleteSingleProduct(product.id),
-                      // delete product from userLinks using it's index position
-                      setUserTipJar(userTipJar.filter((_, i) => i !== index));
-                  } else {
-                    return;
+          {userTipJar.slice(0, 2).map((tipJarLink, index) => (
+            <div className={styles.link} key={index}>
+              <div className={styles.payreq_col1}>
+                <div className={styles.tipjar_bg}>
+                  <FontAwesomeIcon
+                    style={{
+                      color: "#fff",
+                    }}
+                    className={styles.link_icon}
+                    icon={faJar}
+                  />
+                </div>
+                <div className={styles.link_name}>
+                  {tipJarLink.name.length > 15
+                    ? tipJarLink.name.substring(0, 15) + "..."
+                    : tipJarLink.name}
+                </div>
+              </div>
+              <div className={styles.icon_container}>
+                <IoCopy
+                  className={styles.link_icon}
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      `https://ikonshop.io/product/${tipJarLink.id}`
+                    )
                   }
-                }}
-              />
-
-              {/* <Clipboard
-                className={styles.copy_icon}
-                icon={faCopy}
-                style={{
-                  color: "#000",
-                  fontSize: "24px",
-                  marginLeft: "6px",
-                  marginTop: "-2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => navigator.clipboard.writeText(`https://ikonshop.io/product/${product.id}`)}
-              /> */}
+                />
+                <IoEye
+                  className={styles.link_icon}
+                  onClick={() => router.push(`/product/${tipJarLink.id}`)}
+                />
+                <IoTrashBin
+                  className={styles.link_icon}
+                  onClick={() => {
+                    deleteSingleProduct(tipJarLink.id),
+                      setTipJarLinks(tipJarLinks.filter((_, i) => i !== index));
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>
