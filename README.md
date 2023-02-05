@@ -4,9 +4,13 @@
 
 Pay, Tip, and Collect **anonymously** with zero fees.
 
-IkonShop is a platform for merchants and freelancers who need to sell products and collect funds. With a GraphQL Database for products and Solana Pay for transaction execution, users are able to issue invoices, create tip jars, and collect payment at lightning speed. 
+IkonShop is a platform for merchants and freelancers who need to sell products and collect funds. With a GraphQL Database for products and Solana Pay for transaction execution, users are able to issue invoices, create tip jars, and collect payment at lightning speed. Mix in the Elusiv SDK and users now have an option to send payment anonymously as well.
 
-Most Tip Jar or Invoicing platforms charge their users 5% of the transaction as a fee. By leveraging both the speed and low-gas fees on the Solana Blockchain, IkonShop is able to provide a seamless way for anyone to collect funds or tips directly to their wallet with out the platform taking a cut.
+Most Tip Jar or Invoicing platforms charge their users around 5% of the transaction as a fee. By leveraging both the speed and low-gas fees on the Solana Blockchain, IkonShop is able to provide a seamless way for anyone to collect funds or tips directly to their wallet with out the platform taking a cut.
+
+Our goal for the Encode Hackathon was to demonstrate IkonShop's primary features combined with Elusiv. This repo is currently set to use Solana's Devnet, however, when Elusiv is ready for Mainnet so are we.
+
+[Live Site](https://ikon-shop-encode.vercel.app/)
 
 ## Getting Started
 To get the repo running locally execute the commands below in your terminal.
@@ -19,6 +23,10 @@ npm run dev
 ```
 
 rename `.env.local` to `.env`
+
+## Usage
+
+TODO: INSERT DEMO GIFS HERE
 
 ## Prerequisites
 [NPM](https://www.npmjs.com)
