@@ -165,7 +165,7 @@ export default function PaylinkComponent(product) {
               owner={owner}
             />
           )}
-          {publicKey && showElusiv && (
+          {publicKey && showElusiv && !tipAmount && (
             <SendElusiv
               className={styles.pay_btn}
               id={id}

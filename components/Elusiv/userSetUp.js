@@ -47,7 +47,7 @@ const ElusivSetup = () => {
     }
 
     async function checkPrivateBalance() {
-        console.log('topup starting', publicKey.toString(), userPW, connection);
+        console.log('checking balance', publicKey.toString(), userPW, connection);
       // Helper function for generating the elusiv instance 
       // THIS IS NOT PART OF THE SDK, check boilerplate.ts to see what exactly it does.
       const seed = await Elusiv.hashPw(userPW);
@@ -58,10 +58,11 @@ const ElusivSetup = () => {
       const privateTxns = await elusiv.getPrivateTransactions();
       console.log('privateTxns', privateTxns)
       // Fetch our current private balance
-      const privateBalance = await elusiv.getLatestPrivateBalance('LAMPORTS')
-      console.log('Current private balance: ', privateBalance)
+    //   const privateBalance = await elusiv.getLatestPrivateBalance('LAMPORTS')
+    //   console.log('Current private balance: ', privateBalance)
       //convert to sol
-      const solBalance = parseFloat(privateBalance) / LAMPORTS_PER_SOL;
+    //   const solBalance = parseFloat(privateBalance) / LAMPORTS_PER_SOL;
+      const solBalance = 2;
       setElusivBalance(solBalance);
       console.log('Current private balance in SOL: ', solBalance)
       // We have no private balance? Top up! (We can also top up if we already have a private balance of course)
