@@ -166,7 +166,8 @@
     border: none;
     background: #8affcb;
     color: #130b46;
-    width: 200px;
+    min-width: fit-content;
+    max-width: fit-content;
     height: 60px;
     margin: 0px auto 20px auto;
     font-size: 16px;
@@ -176,6 +177,9 @@
     padding: 8px 16px;
     cursor: pointer;
     transition: 0.5s;
+    /* give margin on left and right */
+    margin-left: 10px;
+    margin-right: 10px;
   }
   
   .preview_button {
@@ -194,12 +198,12 @@
     transition: 0.5s;
   }
   
-  /* .button:hover {
+  .button:hover {
     background-image: url(../../../public/blur-bg.png);
     color: white;
     -webkit-animation: bg-pan-left 2s linear infinite alternate both;
     animation: bg-pan-left 2s ease-in-out infinite alternate both;
-  } */
+  } 
   
   .header {
     text-align: center;
@@ -437,6 +441,27 @@
     cursor: pointer;
     transition: 0.5s;
   }
+
+  .anon_header_text{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: "Manrope" !important;
+    margin: 2px 0 2px 0;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    font-size: 16px;
+    justify-content: center;
+  }
+
+  .anon_header_text > span {
+    color: #130b46;
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 5px;
+  }
   
   .form_header {
     width: 100%;
@@ -460,7 +485,16 @@
   .form_header_text {
     font-size: 20px;
     text-align: center;
-    margin: 20px 0;
+    margin: 10px 0;
+    margin-right: 10px;
+    color: #130b46;
+    font-weight: bold;
+  }
+
+  .elusiv_header_text {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
     color: #130b46;
     font-weight: bold;
   }

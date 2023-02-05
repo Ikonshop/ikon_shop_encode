@@ -58,11 +58,11 @@ const ElusivSetup = () => {
       const privateTxns = await elusiv.getPrivateTransactions();
       console.log('privateTxns', privateTxns)
       // Fetch our current private balance
-    //   const privateBalance = await elusiv.getLatestPrivateBalance('LAMPORTS')
-    //   console.log('Current private balance: ', privateBalance)
+      const privateBalance = await elusiv.getLatestPrivateBalance('LAMPORTS')
+      console.log('Current private balance: ', privateBalance)
       //convert to sol
-    //   const solBalance = parseFloat(privateBalance) / LAMPORTS_PER_SOL;
-      const solBalance = 2;
+      const solBalance = parseFloat(privateBalance) / LAMPORTS_PER_SOL;
+    //   const solBalance = 2;
       setElusivBalance(solBalance);
       console.log('Current private balance in SOL: ', solBalance)
       // We have no private balance? Top up! (We can also top up if we already have a private balance of course)
@@ -90,19 +90,6 @@ const ElusivSetup = () => {
         console.log('Ta-da!');
     } 
 
-    const userDetails = useMemo(() => {
-        return {
-            publicKey: publicKey,
-            password: userPW
-        }
-    }, [publicKey, userPW])
-
-    const order = useMemo(() => {
-        return {
-            recipient: 'HZxkqBTnXtAYoFTg2puo9KyiNN42E8Sd2Kh1jq3vT29u'
-        }
-    }, [])
-
     const onSubmit = async(e) => {
         setLoading(true);
         e.preventDefault();
@@ -119,106 +106,11 @@ const ElusivSetup = () => {
         console.log('res', res);
     }
 
-    // const onChange = (e) => {
-    //     console.log("change");
-    //     setUserPW(e.target.value);
-    // }
-
-    const onRecChange = (e) => {
-        console.log("change");
-        setRecipient(e.target.value);
-    }
-
-    
-
     const onTopUpAmountChange = (e) => {
         console.log("change");
         setTopUpAmount(e.target.value);
     }
 
-   
-
-    const renderForm = () => {
-        return (
-            <div className={styles.parent_form_container}>
-                 <div className={styles.background_blur}>
-                    <div className={styles.create_product_container}>
-                        <div className={styles.create_product_form}>
-                            <div className={styles.form_container}>
-                                <div className={styles.form_header}>
-                                    <img
-                                        src={"/tipjar_head_bg.png"}
-                                    />
-                                    {/* <img src="/tipjar_head_bg.png" /> */}
-                                    <h1 className={styles.form_header_text}>
-                                        Elusiv Wallet Balance: {elusivBalance} SOL
-                                    </h1>
-                                </div>
-                                <form>
-                                    <div className={styles.flex_row}>
-                                        {/* <div className={styles.col_half}>
-                                            <label className={styles.checkbox_text} htmlFor="password">Password</label>
-                                            <input className={styles.input_name} type="password" onChange={onChange} name="password" id="password" />
-                                        </div> */}
-                                    </div>
-                                    {userPW != null && userPW != '' && !topUpSent &&(
-                                        <div className={styles.flex_row}>
-                                            <div className={styles.col_half}>
-                                                <label className={styles.checkbox_text} htmlFor="topup">Amount to Fund</label>
-                                                <input className={styles.input_name} type="number" onChange={onTopUpAmountChange} name="topup" id="topup" />
-                                            </div>
-                                        </div>
-                                    )}
-                                    <button
-                                        className={styles.button}
-                                        >click</button>
-                                    <div className={styles.flex_row}>
-                                        {/* {userPW != null && userPW != '' && !topUpSent &&(
-                                        <>
-                                            <div className={styles.col_half}>
-                                                <button
-                                                    className={styles.button}
-                                                    type="submit"
-                                                    onClick={onCheckBalance}
-                                                >
-                                                    Check Balance
-                                                </button>
-                                            </div>
-                                            <div className={styles.col_half}>
-                                                <button
-                                                    className={styles.button}
-                                                    // type="submit"
-                                                    // onClick={() => topup()}
-                                                    onClick={() => console.log('click')}
-                                                >
-                                                    Fund Private Wallet
-                                                </button>
-                                            </div>
-                                        </>
-                                        )} */}
-                                        <button
-
-                                                >
-                                                    Fund Private Wallet
-                                                </button>
-                                        
-                                    </div>
-                                    {topUpSent && (
-                                        <div className={styles.flex_row}>
-                                            <div className={styles.col_half}>
-                                                <p>Top up sent, checking balance in 15 seconds</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
 
     useEffect(() => {
         if(!topUpSent) return;
@@ -236,32 +128,44 @@ const ElusivSetup = () => {
 
     return (
         <div style={{display:"flex", flexDirection: "column", alignContent:"center" }}>
-            <div style={{display:"flex", flexDirection: "row", alignContent:"center" }}>
-                <div style={{display:"flex", flexDirection: "column", alignContent:"center", width: "50%" }}>
-                    <h1 className={styles.form_header_text}>
-                        Elusiv Balance: {elusivBalance} SOL
-                    </h1>
-                    
-                    <button
-                        className={styles.button}
-                        type="submit"
-                        onClick={checkPrivateBalance}
-                    >
-                        Check Balance
-                    </button>
-                </div>
+            <h1 className={styles.anon_header_text}>Anon Funds Low?</h1>
+
+                <div style={{display:"flex", flexDirection: "row", alignContent:"center", justifyContent:"space-evenly" }}>
                     <div style={{display:"flex", flexDirection: "column", alignContent:"center", justifyContent: "center", alignItems:"center" ,width: "50%" }}>
+                        
+                        <button
+                            className={styles.button}
+                            type="submit"
+                            onClick={checkPrivateBalance}
+                        >
+                            Check Balance
+                        </button>
+                        <button
+                            className={styles.button}
+                            type="submit"
+                            onClick={topup}
+                        >
+                            Fund Private Wallet {topUpAmount > 0 ? topUpAmount : ''}
+                        </button>
+                    </div>
+
+                    <div style={{display:"flex", flexDirection: "column", alignContent:"center", width: "50%" }}>
+                        <h1 className={styles.form_header_text}>
+                            Elusiv Balance: {elusivBalance} {elusivBalance > 0 ? 'SOL' : ''}
+                        </h1>
+                        
                         {!topUpSent ? (
                             <input 
                                 style={{
-                                    width: "100px",
+                                    width: "80%",
                                     height: "30px",
                                     borderRadius: "5px",
                                     border: "1px solid #000",
-                                    margin: "15px 10px",
+                                    margin: "45px 10px",
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
+                                    alignSelf: "center",
                                     //center the text
                                     textAlign: "center",
                                     fontSize: "16px",
@@ -276,16 +180,8 @@ const ElusivSetup = () => {
                         ) : (
                             <p>Top up sent, checking balance in 15 seconds</p>
                         )}
-                        <button
-                            className={styles.button}
-                            type="submit"
-                            onClick={topup}
-                        >
-                            Fund Private Wallet
-                        </button>
-                    </div>
-                
-            </div>
+                    </div> 
+                </div>
         </div>
     )
 }

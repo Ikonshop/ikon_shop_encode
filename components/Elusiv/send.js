@@ -96,7 +96,7 @@ const SendElusiv = (req) => {
                     onClick={onSubmit}
                     className="buy-button"
                 >
-                    Send Txn
+                    Send Tip
                 </button>
             </form>
         )
@@ -107,7 +107,6 @@ const SendElusiv = (req) => {
 
     return(
         <div>
-            {!loading && !txnSent && <ElusivSetup />}
             {!loading && renderSubmit()}
             {loading && <Loading />}
         </div>

@@ -3,6 +3,7 @@ import styles from "../styles/Paylink.module.css";
 import Buy from "../components/Buy";
 import { useWallet } from "@solana/wallet-adapter-react";
 import SendElusiv from "./Elusiv/send";
+import ElusivSetup from "./Elusiv/userSetUp";
 
 export default function PaylinkComponent(product) {
   const {
@@ -10,19 +11,11 @@ export default function PaylinkComponent(product) {
     name,
     price,
     description,
-    imageUrl,
     owner,
     token,
     type,
-    collections,
-    hash,
-    filename,
-    purchasedCount,
-    reqUserEmail,
-    reqUserShipping,
   } = product.product;
   const [tipAmount, setTipAmount] = useState("");
-  const [tipProduct, setTipProduct] = useState("");
   const [tokenType, setTokenType] = useState("sol");
   const [showElusiv, setShowElusiv] = useState(false);
   const { publicKey } = useWallet();
@@ -31,7 +24,7 @@ export default function PaylinkComponent(product) {
     return (
       <div className={styles.split}>
         <label className={styles.product_details_price}>Token Type</label>
-        <select
+        {/* <select
           className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="tokenType"
           onChange={(e) => setTokenType(e.target.value)}
@@ -47,7 +40,8 @@ export default function PaylinkComponent(product) {
           <option value="pesky">PESKY</option>
           <option value="gmt">GMT</option>
           <option value="gore">GORE</option>
-        </select>
+        </select> */}
+        SOL
       </div>
     );
   };
@@ -71,16 +65,21 @@ export default function PaylinkComponent(product) {
               <p className={styles.pay_copy}>{description}</p>
               <div className={styles.split}>
                 <p>
-                  {/* splice owner first 2 and last 4 */}
                   Owner:{" "}
                 </p>
                 <p>
                   <strong>{owner.slice(0, 4) + "..." + owner.slice(-4)}</strong>
                 </p>
               </div>
-
               <div className={styles.price_pricebtn}>
-                {type === "tipjar" ? renderTokenTypeInput() : null}
+                <div className={styles.split}>
+                  <p>
+                    Token:{" "}
+                  </p>
+                  <p>
+                    <strong>SOL</strong>
+                  </p>
+                </div>
                 {type != "tipjar" && (
                   <div className={styles.split}>
                     <p>Amount:</p>
@@ -93,7 +92,6 @@ export default function PaylinkComponent(product) {
                     </p>
                   </div>
                 )}
-                {/* if product.type is tipjar then display text box for user to enter a price and display button setTipAmount to that price*/}
                 <div className={styles.split}>
                   {type == "tipjar" && (
                     <div className={styles.product_details_price}>
@@ -129,50 +127,49 @@ export default function PaylinkComponent(product) {
                     />
                     <label for="elusiv">Send Privately w/ Elusiv</label>
                   </div>
-             
-
-                {/* display Buy Button after Tip Amount has been set */}
+                  {publicKey && showElusiv && tipAmount && (
+                    <SendElusiv
+                      className={styles.pay_btn}
+                      id={id}
+                      price={tipAmount}
+                      token={tokenType}
+                      owner={owner}
+                    />
+                  )}
+                  {publicKey && showElusiv && !tipAmount && (
+                    <SendElusiv
+                      className={styles.pay_btn}
+                      id={id}
+                      price={price}
+                      token={tokenType}
+                      owner={owner}
+                    />
+                  )}
+                  {publicKey && !showElusiv && tipAmount && (
+                    <Buy
+                      className={styles.pay_btn}
+                      id={id}
+                      price={tipAmount}
+                      token={tokenType}
+                      owner={owner}
+                    />
+                  )}
+                  {publicKey && !showElusiv && type != "tipjar" ? (
+                    <Buy
+                      className={styles.pay_btn}
+                      id={id}
+                      price={price}
+                      token={token}
+                      owner={owner}
+                    />
+                  ) : null}
               </div>
             </div>
           </div>
         </div>
-        {/* <div className={styles.green_bar}></div> */}
         <div className={styles.shipping_flex}>
-          {publicKey && !showElusiv && tipAmount && (
-            <Buy
-              className={styles.pay_btn}
-              id={id}
-              price={tipAmount}
-              token={tokenType}
-              owner={owner}
-            />
-          )}
-          {publicKey && !showElusiv && type != "tipjar" ? (
-            <Buy
-              className={styles.pay_btn}
-              id={id}
-              price={price}
-              token={token}
-              owner={owner}
-            />
-          ) : null}
-          {publicKey && showElusiv && tipAmount && (
-            <SendElusiv
-              className={styles.pay_btn}
-              id={id}
-              price={tipAmount}
-              token={tokenType}
-              owner={owner}
-            />
-          )}
-          {publicKey && showElusiv && !tipAmount && (
-            <SendElusiv
-              className={styles.pay_btn}
-              id={id}
-              price={price}
-              token={tokenType}
-              owner={owner}
-            />
+          {publicKey && showElusiv && (
+            <ElusivSetup />
           )}
         </div>
       </div>

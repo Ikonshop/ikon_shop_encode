@@ -25,7 +25,9 @@ import {
   IoCopy,
   IoEye,
   IoTrashBin,
+  IoLockClosedOutline
 } from "react-icons/io5";
+import ElusivDash from "../../components/Elusiv/dash";
 import ElusivSetup from "../../components/Elusiv/userSetUp";
 import RecentTxns from "../../components/Elusiv/recentTxns";
 
@@ -125,7 +127,7 @@ function Dashboard() {
               setActiveMenu("elusiv")
             )}
           >
-            <IoLinkOutline style={{ transform: "rotate(-45deg)" }} />
+            <IoLockClosedOutline />
 
             <span id={styles.full_screen}>Elusiv History</span>
           </button>
@@ -189,7 +191,7 @@ function Dashboard() {
     return (
       <>
         <div className="create-component">
-          <ElusivSetup />
+          <ElusivDash />
           <RecentTxns />
         </div>
       </>
@@ -217,7 +219,7 @@ function Dashboard() {
         </div>
         <div className={styles.hero_overlay}></div>
       </div>
-      <ElusivSetup publicKey={publicKey} />
+      <ElusivDash publicKey={publicKey} />
       <div className={styles.recent_links_container}>
         {/* NO USER LINKS CREATED */}
         {userLinks.length > 0 && !loading ? (
