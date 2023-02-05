@@ -228,12 +228,12 @@ function Dashboard() {
         {userLinks.length > 0 && !loading ? (
           renderProductLinks()
         ) : (
-          <p>No Links Created</p>
+          <h4 className={styles.paylink_header}>Pay Requests</h4>
         )}
         {userTipJar.length > 0 && !loading ? (
           renderTipJar()
         ) : (
-          <p>No Tip Jar Created</p>
+          <h4 className={styles.paylink_header}>Tip Jars</h4>
         )}
       </div>
     </div>
@@ -282,7 +282,7 @@ function Dashboard() {
                   className={styles.link_icon}
                   onClick={() => {
                     deleteSingleProduct(payRequest.id),
-                      setPayRequests(payRequests.filter((_, i) => i !== index));
+                    setUserLinks(userLinks.filter((_, i) => i !== index));
                   }}
                 />
               </div>
@@ -296,7 +296,7 @@ function Dashboard() {
   const renderTipJar = () => {
     return (
       <div>
-        <h4 className={styles.paylink_header}>TipJar</h4>
+        <h4 className={styles.paylink_header}>Tip Jars</h4>
         <div className={styles.paylink_container}>
           {userTipJar.slice(0, 2).map((tipJarLink, index) => (
             <div className={styles.link} key={index}>

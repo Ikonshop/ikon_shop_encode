@@ -281,33 +281,6 @@ export default function HeaderComponent() {
     })();
   }, [publicKey, merchant]);
 
-  useEffect(() => {
-    if (publicKey) {
-      async function getData() {
-        const walletData = await CheckForWallet(publicKey.toString());
-        if (walletData.wallet === null) {
-          const newWallet = await CreateWallet(publicKey.toString());
-        }
-        if (
-          process.env.NEXT_PUBLIC_IKONS_WALLETS.includes(publicKey.toString())
-        ) {
-          setMerchant(true);
-        }
-        if (
-          process.env.NEXT_PUBLIC_MRSC_WALLETS.includes(publicKey.toString())
-        ) {
-          setMerchant(true);
-        }
-        if (
-          process.env.NEXT_PUBLIC_ATADIA_WALLETS.includes(publicKey.toString())
-        ) {
-          setMerchant(true);
-        }
-      }
-      getData();
-    }
-  }, [publicKey]);
-
   return (
     <>
       <Navbar expand="lg">
