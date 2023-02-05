@@ -10,7 +10,8 @@ Most Tip Jar or Invoicing platforms charge their users around 5% of the transact
 
 Our goal for the Encode Hackathon was to demonstrate IkonShop's primary features combined with Elusiv. This repo is currently set to use Solana's Devnet, however, when Elusiv is ready for Mainnet so are we.
 
-[Live Site](https://ikon-shop-encode.vercel.app/)
+[Live Site w/ Elusiv - Solana Devnet](https://ikon-shop-encode.vercel.app/)
+[Live Site - Solana Mainnet](https://ikonshop.io/)
 
 ## Getting Started
 To get the repo running locally execute the commands below in your terminal.

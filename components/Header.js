@@ -52,71 +52,6 @@ export default function HeaderComponent() {
     "confirmed"
   );
 
-  const metaplex = Metaplex.make(connection).use(walletAdapterIdentity(wallet));
-
-  //Get Token balances for wallet
-  const getTokenBalances = async () => {
-    const usdcAddress = new PublicKey(
-      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-    );
-    const slabzTokenAddress = new PublicKey(
-      "4SSjVmxXvAmxe5SdTohsg1ESqGjtHpMKdn5Hh2SHScxh"
-    );
-    if (!wallet.connected) {
-      return;
-    }
-    try {
-      const tokenBalances = await connection.getTokenAccountsByOwner(
-        wallet.publicKey,
-        {
-          mint: usdcAddress,
-        }
-      );
-
-      // console.log('tokenBalances: ', tokenBalances)
-
-      if (tokenBalances.value.length > 0) {
-        const balance = await connection.getTokenAccountBalance(
-          tokenBalances.value[0].pubkey
-        );
-        const balance_to_string = balance.value.uiAmountString;
-        console.log("token balance: ", balance_to_string);
-      } else {
-        console.log("no balance");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchNfts = async () => {
-    if (!wallet.connected) {
-      return;
-    }
-    try {
-      const nfts = await metaplex
-        .nfts()
-        .findAllByOwner({ owner: wallet.publicKey });
-      console.log("nfts: ", nfts);
-      let nftData = [];
-      for (let i = 0; i < nfts.length; i++) {
-        if (nfts[i].uri) {
-          let fetchResult = await fetch(nfts[i].uri);
-          let json = await fetchResult.json();
-          nftData.push(json);
-        }
-      }
-
-      setNftData(nftData);
-      console.log("nftData: ", nftData);
-      const wallet_tokens = await metaplex
-        .walletTokens()
-        .findAllByOwner({ owner: wallet.publicKey });
-      console.log("wallet_tokens: ", wallet_tokens);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const renderMultiStoreSelection = () => {
     // console.log('multiStoreArray: ', multiStoreArray)
@@ -249,8 +184,6 @@ export default function HeaderComponent() {
 
   useEffect(() => {
     if (!publicKey) return;
-    // fetchNfts();
-    getTokenBalances();
     setIsMultiStoreOwner(false);
     setMultiStoreArray(null);
     (async () => {
@@ -264,7 +197,6 @@ export default function HeaderComponent() {
       }
       const store = await getCollectionOwner(publicKey);
       if (store.collections.length) {
-        console.log("store: ", store.collections);
         const store_symbols = store.collections.map((item) => item.symbol);
 
         const store_selection = store_symbols;
@@ -277,6 +209,11 @@ export default function HeaderComponent() {
         );
         localStorage.setItem("active_store", JSON.stringify(store_symbols[0]));
         setIsMultiStoreOwner(true);
+      }
+
+      //check for window.localStorage.getItem('elusivBalance'); if it does not exist then create it and set to 0
+      if (localStorage.getItem("elusivBalance") === null) {
+        localStorage.setItem("elusivBalance", JSON.stringify(0));
       }
     })();
   }, [publicKey, merchant]);

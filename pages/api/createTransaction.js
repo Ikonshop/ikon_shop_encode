@@ -73,6 +73,7 @@ const createTransaction = async (req, res) => {
     const buyerAddy = req.body.buyer;
     const owner = req.body.owner;
     var itemPrice = req.body.price;
+    const elusiv= req.body.elusiv;
     console.log("TOKEN TYPE IS THIS!!!", tokenType);
     // const { publicKey, signTransaction }= useWallet();
 
@@ -143,9 +144,12 @@ const createTransaction = async (req, res) => {
 
     const bigAmount = BigNumber(itemPrice);
     const buyerPublicKey = new PublicKey(buyerAddy);
-
-    // const network = WalletAdapterNetwork.Mainnet;
-    const network = WalletAdapterNetwork.Devnet;
+    var network = WalletAdapterNetwork.Mainnet;
+    if(elusiv === true) {
+      console.log("ELUSIV IS TRUE");
+      var network = WalletAdapterNetwork.Devnet;
+    }
+    // const network = WalletAdapterNetwork.Devnet;
 
     const endpoint = clusterApiUrl(network);
     const block_connection = new Connection(endpoint, "confirmed");

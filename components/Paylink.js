@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Paylink.module.css";
 import Buy from "../components/Buy";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -16,35 +16,61 @@ export default function PaylinkComponent(product) {
     type,
   } = product.product;
   const [tipAmount, setTipAmount] = useState("");
-  const [tokenType, setTokenType] = useState("sol");
+  const [tokenType, setTokenType] = useState("");
   const [showElusiv, setShowElusiv] = useState(false);
+  const [elusivBalance, setElusivBalance] = useState(0);
   const { publicKey } = useWallet();
 
   const renderTokenTypeInput = () => {
     return (
       <div className={styles.split}>
         <label className={styles.product_details_price}>Token Type</label>
-        {/* <select
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="tokenType"
-          onChange={(e) => setTokenType(e.target.value)}
-          style={{
-            width: "180px",
-          }}
-        >
-          <option value="sol">SOL</option>
-          <option value="usdc">USDC</option>
-          <option value="groar">GROAR</option>
-          <option value="dust">DUST</option>
-          <option value="creck">CRECK</option>
-          <option value="pesky">PESKY</option>
-          <option value="gmt">GMT</option>
-          <option value="gore">GORE</option>
-        </select> */}
-        SOL
+        {showElusiv ? (
+          <select
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="tokenType"
+            onChange={(e) => setTokenType(e.target.value)}
+            style={{
+              width: "180px",
+            }}
+          >
+            <option value="sol">SOL</option>
+          </select>
+          
+        ) : (
+          <select
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="tokenType"
+            onChange={(e) => setTokenType(e.target.value)}
+            style={{
+              width: "180px",
+            }}
+          >
+            <option value="sol">SOL</option>
+            <option value="usdc">USDC</option>
+            <option value="groar">GROAR</option>
+            <option value="dust">DUST</option>
+            <option value="creck">CRECK</option>
+            <option value="pesky">PESKY</option>
+            <option value="gmt">GMT</option>
+            <option value="gore">GORE</option>
+          </select>
+        )}
+        
+       
       </div>
     );
   };
+
+  useEffect(() => {
+    //check local storage for elusivBalance and set it
+    const elusivBalance = localStorage.getItem("elusivBalance");
+    console.log('elusivBalance', elusivBalance)
+    if (elusivBalance) {
+      setElusivBalance(elusivBalance);
+    }
+  }, []);
+
 
   return (
     <>
@@ -72,14 +98,7 @@ export default function PaylinkComponent(product) {
                 </p>
               </div>
               <div className={styles.price_pricebtn}>
-                <div className={styles.split}>
-                  <p>
-                    Token:{" "}
-                  </p>
-                  <p>
-                    <strong>SOL</strong>
-                  </p>
-                </div>
+                {type === "tipjar" ? renderTokenTypeInput() : null}
                 {type != "tipjar" && (
                   <div className={styles.split}>
                     <p>Amount:</p>
@@ -127,22 +146,33 @@ export default function PaylinkComponent(product) {
                     />
                     <label for="elusiv">Send Privately w/ Elusiv</label>
                   </div>
-                  {publicKey && showElusiv && tipAmount && (
+                  {showElusiv && (
+                    <p style={{
+                      fontSize: "12px",
+                      color: "gray",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      fontWeight: "bold"
+                    }}>**only available on Devnet w/ SOL**</p>
+                  )}
+                  {publicKey && showElusiv && tipAmount && elusivBalance > tipAmount && (
                     <SendElusiv
                       className={styles.pay_btn}
                       id={id}
                       price={tipAmount}
                       token={tokenType}
                       owner={owner}
+                      elusiv={true}
                     />
                   )}
-                  {publicKey && showElusiv && !tipAmount && (
+                  {publicKey && showElusiv && !tipAmount && elusivBalance > price && (
                     <SendElusiv
                       className={styles.pay_btn}
                       id={id}
                       price={price}
                       token={tokenType}
                       owner={owner}
+                      elusiv={true}
                     />
                   )}
                   {publicKey && !showElusiv && tipAmount && (
@@ -152,6 +182,7 @@ export default function PaylinkComponent(product) {
                       price={tipAmount}
                       token={tokenType}
                       owner={owner}
+                      elusiv={false}
                     />
                   )}
                   {publicKey && !showElusiv && type != "tipjar" ? (
@@ -161,8 +192,28 @@ export default function PaylinkComponent(product) {
                       price={price}
                       token={token}
                       owner={owner}
+                      elusiv={false}
                     />
                   ) : null}
+                  {publicKey && showElusiv && tipAmount && elusivBalance < tipAmount && (
+                    <p style={{
+                      fontSize: "12px",
+                      color: "red",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      fontWeight: "bold"
+                    }}>Insufficient Elusiv Balance</p>
+                  )}
+
+                  {publicKey && showElusiv && !tipAmount && elusivBalance < price && (
+                    <p style={{
+                      fontSize: "12px",
+                      color: "red",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      fontWeight: "bold"
+                    }}>Insufficient Elusiv Balance</p>
+                  )}
               </div>
             </div>
           </div>

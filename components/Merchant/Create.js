@@ -125,7 +125,7 @@ const CreateProduct = () => {
       if (response.publishProduct.id) {
         if (window.confirm("Product Created! Would you like to see it?")) {
           {
-            window.location.href = `https://ikonshop.io/product/${response.publishProduct.id}`;
+            router.push(`/product/${product.id}`);
           }
         }
       }

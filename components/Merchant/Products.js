@@ -167,7 +167,7 @@ function myProducts() {
                     <div className={styles.product_card_icons}>
                       <a
                         key={index}
-                        href={`https://ikonshop.io/product/${product.id}`}
+                        onClick={() => router.push(`/product/${product.id}`)}
                       >
                         <IoEye
                           style={{

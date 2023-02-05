@@ -15,7 +15,7 @@ const ElusivDash = () => {
     const [topUpAmount, setTopUpAmount] = useState(null);
     const [topUpSent, setTopUpSent] = useState(false);
     const [recipient, setRecipient] = useState(null);
-    const [elusivBalance, setElusivBalance] = useState(null);
+    const [elusivBalance, setElusivBalance] = useState(0);
     const { publicKey, signTransaction } = useWallet();
     const USER_PASSWORD = 'password';
     const DEVNET_RPC_URL = 'https://api.devnet.solana.com';
@@ -43,22 +43,15 @@ const ElusivDash = () => {
     }
 
     async function draindown() {
-        const seed = await Elusiv.hashPw(userPW);
+        const seed = Elusiv.hashPw(userPW);
         const elusiv = await Elusiv.getElusivInstance(seed, publicKey, connection);
         const receiverPublicKey = publicKey ? publicKey : null;
-        console.log('send starting with recipient', receiverPublicKey.toString());
         // await checkPrivateBalance();
 
-        // if(elusivBalance < sendAmount) {
-        //     alert('Not enough balance to send, top up your account');
-        //     return;
-        // }
-        
-        // Send half a SOL, privately 😎
         const sendTx = await elusiv.buildSendTx(topUpAmount * LAMPORTS_PER_SOL, receiverPublicKey, 'LAMPORTS');
     
         const sendRes = await elusiv.sendElusivTx(sendTx);
-        console.log(`Send initiated with sig ${sendRes.sig.signature}`);
+        
         console.log('Ta-da!'); 
         return ;
       }
@@ -85,33 +78,6 @@ const ElusivDash = () => {
         window.localStorage.setItem('elusivBalance', solBalance);
     }
 
-    async function send() {
-        const seed = await Elusiv.hashPw(userPW);
-        const elusiv = await Elusiv.getElusivInstance(seed, publicKey, connection);
-        const receiverPublicKey = recipient ? new PublicKey(recipient) : null;
-        console.log('send starting with recipient', receiverPublicKey.toString());
-        // await checkPrivateBalance();
-
-        // if(elusivBalance < sendAmount) {
-        //     alert('Not enough balance to send, top up your account');
-        //     return;
-        // }
-        
-        // Send half a SOL, privately 😎
-        const sendTx = await elusiv.buildSendTx(sendAmount * LAMPORTS_PER_SOL, receiverPublicKey, 'LAMPORTS');
-    
-        const sendRes = await elusiv.sendElusivTx(sendTx);
-        console.log(`Send initiated with sig ${sendRes.sig.signature}`);
-        console.log('Ta-da!');
-    } 
-
-    const onSubmit = async(e) => {
-        setLoading(true);
-        e.preventDefault();
-        console.log("submit");        
-        const res = await send();
-        console.log('res', res);
-    }
 
     const onCheckBalance = async(e) => {
         setLoading(true);
@@ -135,17 +101,14 @@ const ElusivDash = () => {
         }, 15000);
     }, [topUpSent])
 
-    // useEffect(() => {
-    //     if(publicKey) {
-    //         checkPrivateBalance();
-    //     }
-    // }, [publicKey])
-
     return (
         <div style={{display:"flex", flexDirection: "column", alignContent:"center", width: "80vw", backgroundColor:"#f6f8fa", marginBottom:"10px", paddingTop:"20px" }}>
             <h1 className={styles.anon_header_text}>
                     ANON CENTER{" "} | {" "}  <span>ELUSIV</span>
             </h1>
+            <h2 className={styles.anon_sub_header_text}>
+                <span>only available on Devnet</span>
+            </h2>
             <div style={{display:"flex", flexDirection: "row", alignContent:"center", justifyContent:"space-evenly" }}>
                 <h1 className={styles.form_header_text}>
                     Balance: {elusivBalance} {elusivBalance > 0 ? 'SOL' : ''}

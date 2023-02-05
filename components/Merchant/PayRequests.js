@@ -52,17 +52,12 @@ export default function PayRequests(publicKey) {
     );
   };
 
-  console.log("router.pathname", router.pathname);
-  console.log("router.asPath", router.query);
-
   useEffect(() => {
     async function getData() {
       const payRequests = await getAllPayRequests(publicKey);
       setPayRequests(...[payRequests]);
       const tipJarLinks = await getAllTipJarLinks(publicKey);
       setTipJarLinks(tipJarLinks);
-      console.log("payreqs", payRequests);
-      console.log("tips", tipJarLinks);
     }
     getData();
   }, []);

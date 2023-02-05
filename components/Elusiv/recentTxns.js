@@ -11,11 +11,7 @@ const RecentTxns = () => {
     const [loading, setLoading] = useState(false);
     // const [userPW, setUserPW] = useState(null);
     const userPW = 'IkonShopEncodeHackathon'
-    const [sendAmount, setSendAmount] = useState(null);
-    const [topUpAmount, setTopUpAmount] = useState(null);
-    const [topUpSent, setTopUpSent] = useState(false);
-    const [recipient, setRecipient] = useState(null);
-    const [elusivBalance, setElusivBalance] = useState(null);
+    const [recentTxns, setRecentTxns] = useState(null);
     const { publicKey, signTransaction } = useWallet();
     const USER_PASSWORD = 'password';
     const DEVNET_RPC_URL = 'https://api.devnet.solana.com';
@@ -41,53 +37,55 @@ const RecentTxns = () => {
     
         console.log("Our last 5 private transactions:\n");
         console.log(last5PrivTxs);
+
+        setRecentTxns(last5PrivTxs);
     }
 
     const dummyTxns = [
         {
             "id": "1",
-            "amount": "100",
-            "type": "LAMPORTS",
-            "recipient": "2",
-            "sender": "1",
+            "amount": "1",
+            "type": "SOL",
+            "recipient": "57mR...1ERv",
+            "sender": "7wK3...qR2n",
             "timestamp": "2021-08-01T00:00:00.000Z"
         },
         {
             "id": "2",
-            "amount": "100",
-            "type": "LAMPORTS",
-            "recipient": "2",
-            "sender": "1",
+            "amount": "4",
+            "type": "SOL",
+            "recipient": "2fA6...1ERv",
+            "sender": "7wK3...qR2n",
             "timestamp": "2021-08-01T00:00:00.000Z"
         },
         {
             "id": "3",
-            "amount": "100",
-            "type": "LAMPORTS",
-            "recipient": "2",
-            "sender": "1",
+            "amount": "10",
+            "type": "SOL",
+            "recipient": "57mR...1ERv",
+            "sender": "7wK3...qR2n",
             "timestamp": "2021-08-01T00:00:00.000Z"
         },
         {
             "id": "4",
-            "amount": "100",
-            "type": "LAMPORTS",
-            "recipient": "2",
-            "sender": "1",
+            "amount": ".5",
+            "type": "SOL",
+            "recipient": "57mR...1ERv",
+            "sender": "7wK3...qR2n",
             "timestamp": "2021-08-01T00:00:00.000Z"
         },
         {
             "id": "5",
-            "amount": "100",
-            "type": "LAMPORTS",
-            "recipient": "2",
-            "sender": "1",
+            "amount": "3",
+            "type": "SOL",
+            "recipient": "ykGd...BjeQ",
+            "sender": "7wK3...qR2n",
             "timestamp": "2021-08-01T00:00:00.000Z"
         }
     ]
 
     return (
-        // return two containers, the first container shows the most recent txn, the second container shows the last 5 txns in table format
+        // DEMO RENDERING
         <div className={styles.container}>
             <div className={styles.recentTxns}>
                 <h2 className={styles.form_header_text}>Most Recent Transaction</h2>
@@ -104,25 +102,70 @@ const RecentTxns = () => {
             <div className={styles.last5Txns}>
                 <h2 className={styles.table_header_text}>Last 5 Transactions</h2>
                 <table className={styles.sub_table}>
-                    <tr>
-                        <th>Amount</th> 
-                        <th>Type</th>
-                        <th>Recipient</th>
-                        <th>Sender</th>
-                        <th>Timestamp</th>
-                    </tr>
-                    {dummyTxns.map((txn) => (
+                    <thead>
                         <tr>
-                            <td>{txn.amount}</td>
-                            <td>{txn.type}</td>
-                            <td>{txn.recipient}</td>
-                            <td>{txn.sender}</td>
-                            <td>{new Date(txn.timestamp).toLocaleDateString()}</td>
+                            <th>Amount</th> 
+                            <th>Type</th>
+                            <th>Recipient</th>
+                            <th>Sender</th>
+                            <th>Timestamp</th>
                         </tr>
-                    ))}
+                    </thead>
+                    <tbody>
+                        {dummyTxns.map((txn, index) => (
+                            <tr key={index}>
+                                <td>{txn.amount}</td>
+                                <td>{txn.type}</td>
+                                <td>{txn.recipient}</td>
+                                <td>{txn.sender}</td>
+                                <td>{new Date(txn.timestamp).toLocaleDateString()}</td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
         </div>
+
+        // REAL RENDERING
+    //    <div className={styles.container}>
+    //         <div className={styles.recentTxns}>
+    //             <h2 className={styles.form_header_text}>Most Recent Transaction</h2>
+    //             <div className={styles.txn}>
+    //                 <div className={styles.txnInfo}>
+    //                     <p><span>Amount:</span> {recentTxns.length > 0 ? recentTxns[0].amount : null}</p> 
+    //                     <p><span>Type:</span> {recentTxns.length > 0 ? recentTxns[0].type : null}</p>
+    //                     <p><span>Recipient: </span>{recentTxns.length > 0 ? recentTxns[0].recipient : null}</p>
+    //                     <p><span>Sender:</span> {recentTxns.length > 0 ? recentTxns[0].sender : null}</p>
+    //                     <p><span>Timestamp:</span> {recentTxns.length > 0 ? new Date(recentTxns[0].timestamp).toLocaleDateString() : null}</p>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         <div className={styles.last5Txns}>
+    //             <h2 className={styles.table_header_text}>Last 5 Transactions</h2>
+    //             {recentTxns.length > 0 ? (
+    //                 <table className={styles.sub_table}>
+    //                     <tr>
+    //                         <th>Amount</th> 
+    //                         <th>Type</th>
+    //                         <th>Recipient</th>
+    //                         <th>Sender</th>
+    //                         <th>Timestamp</th>
+    //                     </tr>
+    //                     {recentTxns.map((txn, index) => (
+    //                         <tr key={index}>
+    //                             <td>{txn.amount}</td>
+    //                             <td>{txn.type}</td>
+    //                             <td>{txn.recipient}</td>
+    //                             <td>{txn.sender}</td>
+    //                             <td>{new Date(txn.timestamp).toLocaleDateString()}</td>
+    //                         </tr>
+    //                     ))}
+    //                 </table>
+    //             ) : (
+    //                 <p>No transactions found</p>
+    //             )}
+    //         </div>
+    //     </div>
     )
 }
 

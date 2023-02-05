@@ -109,7 +109,9 @@ const CreateLink = () => {
                 </span>
                 <a
                   className={styles.link_text}
-                  href={`https://ikonshop.io/product/${payLink}`}
+                  onClick={() => {
+                    router.push(`/product/${payLink}`);
+                  }}
                 >
                   {`ikonshop.io/product/${payLink.slice(0, 7)}...`}
                 </a>

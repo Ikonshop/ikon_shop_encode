@@ -165,7 +165,7 @@ function CurrentLinks() {
       {userLinks.length > 0 && !loading ? (
       <PayRequests publicKey={publicKey}/>
       ) : (
-        <p>No Links Created</p>
+        null
       )}
     </div>
   );
