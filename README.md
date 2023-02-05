@@ -28,31 +28,31 @@ rename `.env.local` to `.env`
 
 To test our site, you can first connect your Solana Wallet and navigate to the User Dashboard
 
-![Step 1](/1.png)
+![Step 1](public/1.png)
 
 From there, you can either click 'Start Selling' or navigate to the 'Pay Hub' on the left.
 
 The Pay Hub allows you create either Pay Request links (where the price is pre-set) or a Tip Jar (where the tipper inputs the amount).
 
-![Step 2](/2.png)
+![Step 2](public/2.png)
 
  Here, we will demo the Tip Jar.
 
-![Step 3](/3.png)
+![Step 3](public/3.png)
 
 After creating the Tip Jar, or Pay Request, the user is provided with a link.
 
-![Step 4](/4.png)
+![Step 4](public/4.png)
 
 From the link the user can then issue payment using Solana Pay and can opt to do so privately (on Devnet) with Elusiv.
 
-![Step 5](/5.png)
+![Step 5](public/5.png)
 
 Our Dashboard makes it easy to view past private transactions made through Elusiv, as well as your Mainnet transactions on our platform.
 
-![Step 6](/6.png)
+![Step 6](public/6.png)
 
-![Step 7](/7.png)
+![Step 7](public/7.png)
 
 ## Prerequisites
 [NPM](https://www.npmjs.com)
