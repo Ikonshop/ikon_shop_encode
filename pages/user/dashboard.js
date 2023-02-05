@@ -14,7 +14,10 @@ import {
 import UserOrders from "../../components/User/User-Orders";
 import PayRequests from "../../components/Merchant/PayRequests";
 import CreateLink from "../../components/User/Create-Link";
-import { getCollectionOwner } from "../../lib/api";
+import {
+  getCollectionOwner,
+  deleteSingleProduct,
+} from "../../lib/api";
 import {
   IoArrowBackOutline,
   IoBarChartOutline,
@@ -330,7 +333,7 @@ function Dashboard() {
                   className={styles.link_icon}
                   onClick={() => {
                     deleteSingleProduct(tipJarLink.id),
-                      setTipJarLinks(tipJarLinks.filter((_, i) => i !== index));
+                    setUserTipJar(userTipJar.filter((_, i) => i !== index));
                   }}
                 />
               </div>
