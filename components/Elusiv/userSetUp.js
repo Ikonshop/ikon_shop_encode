@@ -235,48 +235,55 @@ const ElusivSetup = () => {
 
     return (
         <div style={{display:"flex", flexDirection: "column", alignContent:"center" }}>
-            <h1 className={styles.form_header_text}>
-                Elusiv Private Wallet Balance: {elusivBalance} SOL
-            </h1>
-            <div style={{display:"flex", flexDirection: "row", alignContent:"center", justifyContent:"center"}}>
-                <button
-                    className={styles.button}
-                    type="submit"
-                    onClick={checkPrivateBalance}
-                >
-                    Check Balance
-                </button>
-                {!topUpSent ? (
-                    <input 
-                        style={{
-                            width: "100px",
-                            height: "30px",
-                            borderRadius: "5px",
-                            border: "1px solid #000",
-                            margin: "10px 10px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            //center the text
-                            textAlign: "center",
-                            fontSize: "16px",
-                        }} 
-                        type="number" 
-                        placeholder="Amount"
-                        onChange={onTopUpAmountChange} 
-                        name="topup" 
-                        id="topup" 
-                    />
-                ) : (
-                    <p>Top up sent, checking balance in 15 seconds</p>
-                )}
-                <button
-                    className={styles.button}
-                    type="submit"
-                    onClick={topup}
-                >
-                    Fund Private Wallet
-                </button>
+            <div style={{display:"flex", flexDirection: "row", alignContent:"center" }}>
+                <div style={{display:"flex", flexDirection: "column", alignContent:"center", width: "50%" }}>
+                    <h1 className={styles.form_header_text}>
+                        Elusiv Balance: {elusivBalance} SOL
+                    </h1>
+                    
+                    <button
+                        className={styles.button}
+                        type="submit"
+                        onClick={checkPrivateBalance}
+                    >
+                        Check Balance
+                    </button>
+                </div>
+                    <div style={{display:"flex", flexDirection: "column", alignContent:"center", justifyContent: "center", alignItems:"center" ,width: "50%" }}>
+                        {!topUpSent ? (
+                            <input 
+                                style={{
+                                    width: "100px",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #000",
+                                    margin: "15px 10px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    //center the text
+                                    textAlign: "center",
+                                    fontSize: "16px",
+                                    marginBottom: "10px",
+                                }} 
+                                type="number" 
+                                placeholder="Amount"
+                                onChange={onTopUpAmountChange} 
+                                name="topup" 
+                                id="topup" 
+                            />
+                        ) : (
+                            <p>Top up sent, checking balance in 15 seconds</p>
+                        )}
+                        <button
+                            className={styles.button}
+                            type="submit"
+                            onClick={topup}
+                        >
+                            Fund Private Wallet
+                        </button>
+                    </div>
+                
             </div>
         </div>
     )
