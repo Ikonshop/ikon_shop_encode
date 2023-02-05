@@ -266,8 +266,6 @@ const createTransaction = async (req, res) => {
       }
       await checkAccounts();
     
-    // This is new, we're getting the mint address of the token we want to transfer
-    
       const transferInstruction = createTransferCheckedInstruction(
         buyerUsdcAddress, 
         usdcAddress,     // This is the address of the token we want to transfer

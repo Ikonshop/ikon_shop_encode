@@ -10,7 +10,6 @@ import Footer from "../../components/Footer";
 import Orders from "../../components/User/Link-Orders";
 import styles from "../../styles/Merchant.module.css";
 import Loading from "../../components/Loading";
-import UserSubs from "../../components/User/User-Subs";
 import {
   WarningOutline,
   TrashBin,
